@@ -4,20 +4,20 @@ import loja.orcamento.Orcamento;
 
 import java.math.BigDecimal;
 
-public class DescontoParaOrcamentoComMaisDeCincoItens extends Desconto{
+public class DescontoParaOrcamentoComMaisDeCincoItens extends Desconto {
 
     public DescontoParaOrcamentoComMaisDeCincoItens(Desconto proximo) {
         super(proximo);
     }
 
-    public BigDecimal calcular(Orcamento orcamento) {
+    @Override
+    public BigDecimal efetuarCalculo(Orcamento orcamento) {
+        return orcamento.getValor().multiply(new BigDecimal("0.1"));
+    }
 
-        if (orcamento.getQuantidade() >= 5) {
-            return orcamento.getValor().multiply(new BigDecimal("0.1"));
-        }
-
-        return proximo.calcular(orcamento);
-
+    @Override
+    public boolean deveAplicar(Orcamento orcamento) {
+        return orcamento.getQuantidade() >= 5;
     }
 
 }
